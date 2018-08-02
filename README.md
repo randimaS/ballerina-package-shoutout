@@ -1,1 +1,1 @@
-# ballerina-package-shoutout
+# Ballerina ShoutOUT Connector

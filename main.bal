@@ -1,13 +1,13 @@
 import ballerina/io;
-import shoutout/sms;
+import shoutout/shoutout;
 
-endpoint sms:Client  shoutoutEP {
+endpoint shoutout:Client  shoutoutEP {
   host:"localhost",
   port: "111",
   apiResource: "/send/sms"
 };
 
 function main(string... args) {
- shoutoutEP->sendSMS ("Test message1" , "33243242");
+ shoutoutEP->sendSMS ("Test message" , "33243242");
 
 }

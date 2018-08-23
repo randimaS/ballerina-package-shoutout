@@ -1,23 +1,37 @@
 import ballerina/io;
+import ballerina/http;
 
-public type Client object {
-     public ClientConfig config;
-     public ClientConnector connector = new;
-     public function init(ClientConfig  clientConfig);
-     public function getCallerActions() returns ClientConnector ;
+public type ShouOutClientConfig record {
+    http:ClientEndpointConfig clientConfig = {};
 };
 
-function Client::init(ClientConfig  clientConfig)  {
+public type Client object {
+    public ShouOutClientConfig shououtClientConfiguration = {};
+    public ShoutOutConnector shououtConnector = new;
+
+    documentation { ShoutOUT client endpoint initialization function
+        P{{ShouOutClientConfig}} - ShoutOUT client configuration
+    }
+    public function init(ShouOutClientConfig shoutoutClientConfig);
+
+    documentation { Return the GitHub client
+        R{{}} - ShouOut client
+    }
+    public function getCallerActions() returns ShoutOutConnector;
+
+};
+
+function Client::init(ShouOutClientConfig shoutoutClientConfig)  {
     io:println("Calling client init method");
-    io:println("url " + clientConfig.host);
-    io:println("port " + clientConfig.port);
-    io:println("api resource " + clientConfig.apiResource);
-    self.connector.host = clientConfig.host;
-    self.connector.port = clientConfig.port;
-    self.connector.apiResource = clientConfig.apiResource;
+
+    // Set the target url to the ShoutOUT REST API endpoint
+    shoutoutClientConfig.clientConfig.url = SHOUTOUT_LITE_API_BASE_URL;
+
+    // Initialize the client endpoint with the configurations
+    self.shououtConnector.shououtRestClient.init(shoutoutClientConfig.clientConfig);
 }
 
-function Client::getCallerActions() returns  ClientConnector{
-    return self.connector;   
+function Client::getCallerActions() returns  ShoutOutConnector{
+    return self.shououtConnector;
 }
 

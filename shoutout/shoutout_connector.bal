@@ -2,21 +2,24 @@ import ballerina/io;
 import ballerina/http;
 
 public type ShoutOutConnector object  {
-    public string host;
-    public string port;
-    public string apiResource;
-    public http:Client shoutOutRestClient = new;
+    public http:Client shoutoutRestClient = new;
 
-
-    public function sendSMS(string smsSource, string smsDestinations,string transports,string smsContent);
+    public function sendSMS();
 };
 
 
-function ShoutOutConnector::sendSMS(string smsSource, string smsDestinations,string transports,string smsContent)  {
-    io:println("host :" + self.host + " port : " + self.port + " api resource :" + self.apiResource);
-    io:println("Sending sms messge : " + smsContent + " to phone no : " + smsDestinations);
-    //endpoint http:Client shoutOutEndpoint = self.shoutOutRestClient;
-    json sendSmsJsonPayload = { "source": smsSource,"destinations": [smsDestinations] , "transports": [transports] , "content": { "sms": smsContent } };
+function ShoutOutConnector::sendSMS()  {
+    //io:println("Sending sms messge : " + smsContent + " to phone no : " + smsDestinations);
+    endpoint http:Client shoutOutEndpoint = self.shoutoutRestClient;
+    json sendSmsJsonPayload = {"source": "ShoutDEMO","destinations": [""] ,"transports": ["sms"] ,"content": {"sms": "Test message Sent via ShoutOUT Gateway"}};
+    //{ "source": smsSource,"destinations": [smsDestinations] , "transports": [transports] , "content": { "sms": smsContent } };
+    http:Request request = new;
+    request.setHeader("Content-Type","application/json");
+    request.setHeader("Authorization","Apikey xxxxxxxxxxxx");
+    request.setJsonPayload(sendSmsJsonPayload);
 
+    string endpointResource = MSG_SEND;
 
+    var response = shoutOutEndpoint->post(endpointResource, request);
+    io:println("Response" + response);
 }

@@ -2,24 +2,39 @@ import ballerina/io;
 import ballerina/http;
 
 public type ShoutOutConnector object  {
-    public http:Client shoutoutRestClient = new;
+    public http:Client shoutOutRestClient;
 
-    public function sendSMS();
+    public function sendSMS(string apiKey, string destination, string content);
+    public function sendOTP(string apiKey, string destination, string content);
 };
 
 
-function ShoutOutConnector::sendSMS()  {
-    //io:println("Sending sms messge : " + smsContent + " to phone no : " + smsDestinations);
-    endpoint http:Client shoutOutEndpoint = self.shoutoutRestClient;
-    json sendSmsJsonPayload = {"source": "ShoutDEMO","destinations": [""] ,"transports": ["sms"] ,"content": {"sms": "Test message Sent via ShoutOUT Gateway"}};
-    //{ "source": smsSource,"destinations": [smsDestinations] , "transports": [transports] , "content": { "sms": smsContent } };
+function ShoutOutConnector::sendSMS(string apiKey, string destination, string content) {
+    endpoint http:Client httpClient = self.shoutOutRestClient;
+    
+    json sendSmsJsonPayload = {"source": SHOUTOUT_DEMO,"destinations": [destination] ,"transports": [SMS_TRANSPORT] ,"content": {"sms": content}};
+
     http:Request request = new;
-    request.setHeader("Content-Type","application/json");
-    request.setHeader("Authorization","Apikey xxxxxxxxxxxx");
+    request.setHeader(AUTHORIZATION, apiKey);
     request.setJsonPayload(sendSmsJsonPayload);
 
-    string endpointResource = MSG_SEND;
+    string resourcePath = MSG_SEND;
 
-    var response = shoutOutEndpoint->post(endpointResource, request);
-    io:println("Response" + response);
+    var response = httpClient->post(resourcePath, request);
+    io:println(response);
+}
+
+function ShoutOutConnector::sendOTP(string apiKey, string destination, string content) {
+    endpoint http:Client httpClient = self.shoutOutRestClient;
+
+    json sendOtpJsonPayload = {"source": SHOUTOUT_DEMO,"destinations": destination, "transports": SMS_TRANSPORT ,"content": {"sms": content}};
+
+    http:Request request = new;
+    request.setHeader(AUTHORIZATION, apiKey);
+    request.setJsonPayload(sendOtpJsonPayload);
+
+    string resourcePath = OTP_SEND;
+
+    var response = httpClient->post(resourcePath, request);
+    io:println(response);
 }

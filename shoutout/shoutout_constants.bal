@@ -4,3 +4,8 @@
 
 @final string MSG_SEND = "/coreservice/messages";
 @final string OTP_SEND = "/otp/send";
+
+@final string SHOUTOUT_DEMO = "ShoutDEMO";
+@final string SMS_TRANSPORT = "sms";
+
+@final string AUTHORIZATION = "Authorization";

@@ -2,12 +2,16 @@ import ballerina/io;
 import shoutout;
 
 endpoint shoutout:Client shoutoutEP {
-  host:"localhost",
-  port: "111",
-  apiResource: "/send/sms"
+};
+
+endpoint shoutout:Client shoutoutLiteEP {
+  endpointType: "lite"
 };
 
 function main(string... args) {
- shoutoutEP->sendSMS ();
-
+  string apiKey = "Apikey xxx";
+  string destinations = "+94xxx";
+  string content = "Test SMS";
+  shoutoutEP->sendOTP(apiKey, destinations, content);
+  shoutoutLiteEP->sendSMS(apiKey, destinations, content);
 }

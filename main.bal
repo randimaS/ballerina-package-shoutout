@@ -12,7 +12,6 @@ function main(string... args) {
   string apiKey = "Apikey apiKey";
   string destinations = "+94xxxxxx";
   string SMScontent = "Test SMS";
-  string OTPcontent = "Test OTP";
-  shoutoutLiteEP->sendOTP(apiKey, destinations, OTPcontent);
+  shoutoutLiteEP->sendOTP(apiKey, destinations);
   shoutoutLiteEP->sendSMS(apiKey, destinations, SMScontent);
 }

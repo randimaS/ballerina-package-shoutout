@@ -9,14 +9,8 @@ public type Client object {
     public ShouOutClientConfig shououtClientConfiguration = {};
     public ShoutOutConnector shououtConnector = new;
 
-    documentation { ShoutOUT client endpoint initialization function
-        P{{ShouOutClientConfig}} - ShoutOUT client configuration
-    }
     public function init(ShouOutClientConfig shoutoutClientConfig);
 
-    documentation { Return the GitHub client
-        R{{}} - ShouOut client
-    }
     public function getCallerActions() returns ShoutOutConnector;
 
 };
@@ -28,7 +22,7 @@ function Client::init(ShouOutClientConfig shoutoutClientConfig)  {
     shoutoutClientConfig.clientConfig.url = SHOUTOUT_LITE_API_BASE_URL;
 
     // Initialize the client endpoint with the configurations
-    self.shououtConnector.shououtRestClient.init(shoutoutClientConfig.clientConfig);
+    self.shououtConnector.shoutoutRestClient.init(shoutoutClientConfig.clientConfig);
 }
 
 function Client::getCallerActions() returns  ShoutOutConnector{

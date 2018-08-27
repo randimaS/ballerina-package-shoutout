@@ -9,9 +9,10 @@ endpoint shoutout:Client shoutoutLiteEP {
 };
 
 function main(string... args) {
-  string apiKey = "Apikey xxx";
-  string destinations = "+94xxx";
-  string content = "Test SMS";
-  shoutoutEP->sendOTP(apiKey, destinations, content);
-  shoutoutLiteEP->sendSMS(apiKey, destinations, content);
+  string apiKey = "Apikey apiKey";
+  string destinations = "+94xxxxxx";
+  string SMScontent = "Test SMS";
+  string OTPcontent = "Test OTP";
+  shoutoutLiteEP->sendOTP(apiKey, destinations, OTPcontent);
+  shoutoutLiteEP->sendSMS(apiKey, destinations, SMScontent);
 }

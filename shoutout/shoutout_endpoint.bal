@@ -14,11 +14,7 @@ public type Client object {
 };
 
 function Client::init(ShoutOutConfig shoutOutConfig)  {
-    if (shoutOutConfig.endpointType == "lite") {
-        shoutOutConfig.clientConfig.url = SHOUTOUT_LITE_API_BASE_URL;
-    } else {
-        shoutOutConfig.clientConfig.url = SHOUTOUT_OTP_API_BASE_URL;
-    }
+    shoutOutConfig.clientConfig.url = SHOUTOUT_LITE_API_BASE_URL;
     self.shoutOutConnector.shoutOutRestClient.init(shoutOutConfig.clientConfig);
 }
 

@@ -9,3 +9,5 @@
 @final string SMS_TRANSPORT = "sms";
 
 @final string AUTHORIZATION = "Authorization";
+
+@final string APIKEY = "Apikey";

@@ -15,6 +15,7 @@ public type Client object {
 
 function Client::init(ShoutOutConfig shoutOutConfig)  {
     shoutOutConfig.clientConfig.url = SHOUTOUT_LITE_API_BASE_URL;
+    self.shoutOutConnector.apiKey = APIKEY + <string>shoutOutConfig.apiKey;
     self.shoutOutConnector.shoutOutRestClient.init(shoutOutConfig.clientConfig);
 }
 

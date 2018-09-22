@@ -1,8 +1,9 @@
 import ballerina/io;
+import ballerina/config;
 import shoutout;
 
 endpoint shoutout:Client shoutoutEP {
-  apiKey: "xxx"
+  apiKey: "Apikey "+config:getAsString("API_KEY")
 };
 
 function main(string... args) {

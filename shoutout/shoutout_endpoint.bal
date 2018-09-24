@@ -1,23 +1,25 @@
 import ballerina/io;
+import ballerina/http;
 
-public type Client object {
-     public ClientConfig config;
-     public ClientConnector connector = new;
-     public function init(ClientConfig  clientConfig);
-     public function getCallerActions() returns ClientConnector ;
+public type ShoutOutConfig record {
+    http:ClientEndpointConfig clientConfig;
 };
 
-function Client::init(ClientConfig  clientConfig)  {
-    io:println("Calling client init method");
-    io:println("url " + clientConfig.host);
-    io:println("port " + clientConfig.port);
-    io:println("api resource " + clientConfig.apiResource);
-    self.connector.host = clientConfig.host;
-    self.connector.port = clientConfig.port;
-    self.connector.apiResource = clientConfig.apiResource;
+public type Client object {
+    public ShoutOutConfig shoutoutClientConfiguration = {};
+    public ShoutOutConnector shoutOutConnector = new;
+
+    public function init(ShoutOutConfig shoutOutConfig);
+    public function getCallerActions() returns ShoutOutConnector;
+};
+
+function Client::init(ShoutOutConfig shoutOutConfig)  {
+    shoutOutConfig.clientConfig.url = SHOUTOUT_LITE_API_BASE_URL;
+    self.shoutOutConnector.apiKey = APIKEY + <string>shoutOutConfig.apiKey;
+    self.shoutOutConnector.shoutOutRestClient.init(shoutOutConfig.clientConfig);
 }
 
-function Client::getCallerActions() returns  ClientConnector{
-    return self.connector;   
+function Client::getCallerActions() returns  ShoutOutConnector{
+    return self.shoutOutConnector;
 }
 

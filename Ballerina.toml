@@ -1,8 +1,7 @@
 [project]
-org-name = "ShouOUT"
+org-name = "ShoutOUT"
 version = "0.0.1"
 authors = [""]
 keywords = ["shoutout", "endpoint", "API"]
 repository = "https://github.com/randimaS/ballerina-package-shoutout"
 license = "Apache-2.0"
-

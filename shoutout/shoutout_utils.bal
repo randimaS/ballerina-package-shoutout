@@ -2,25 +2,20 @@ import ballerina/http;
 
 function parseResponseToJson(http:Response|error response) returns (json|ShoutoutError) {
     json result = {};
-    match response {
-        http:Response httpResponse => {
-            var jsonPayload = httpResponse.getJsonPayload();
-            match jsonPayload {
-                json payload => {
-
-                    return payload;
-                }
-                error err => {
-                    ShoutoutError shoutoutError = { message: "Error occurred when parsing response to json." };
-                    shoutoutError.cause = err.cause;
-                    return shoutoutError;
-                }
-            }
+    if (response is http:Response) {
+        var jsonPayload = response.getJsonPayload();
+        if (jsonPayload is json){
+            return jsonPayload;
         }
-        error err => {
-            ShoutoutError shoutoutError = { message: "Error occurred when HTTP client invocation." };
+        else{
+            ShoutoutError shoutoutError = { message: "Error occurred when parsing response to json." };
             shoutoutError.cause = err.cause;
             return shoutoutError;
         }
+    }
+    else{
+        ShoutoutError shoutoutError = { message: "Error occurred when HTTP client invocation." };
+        shoutoutError.cause = err.cause;
+        return shoutoutError;
     }
 }

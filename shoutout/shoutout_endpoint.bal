@@ -3,7 +3,9 @@ import ballerina/http;
 
 
 public type ShoutOutConfiguration record {
-    http:ClientEndpointConfig restClientConfig = {};
+    http:ClientEndpointConfig restClientConfig = {
+    
+    };
     string apiKey;
 };
 
@@ -18,15 +20,22 @@ public type Client client object {
 
     }
 
-    public remote function sendSMS(string destination, string content) returns json|error;
-    public remote function sendOTP(string destination) returns json|error;
-    public remote function verifyOTP(string code, string referenceId) returns json|error;
+    public remote function sendSMS(string destination, string content) returns json | error;
+    public remote function sendOTP(string destination) returns json | error;
+    public remote function verifyOTP(string code, string referenceId) returns json | error;
 };
 
-public remote function Client.sendSMS(string destination, string content) returns json|error{
+public remote function Client.sendSMS(string destination, string content) returns json | error {
 
     string endpointResource = MSG_SEND;
-    json sendSmsJsonPayload = {"source": SHOUTOUT_DEMO,"destinations": [destination] ,"transports": [SMS_TRANSPORT] ,"content": {"sms": content}};
+    json sendSmsJsonPayload = {
+        "source": SHOUTOUT_DEMO,
+        "destinations": [destination],
+        "transports": [SMS_TRANSPORT],
+        "content": {
+            "sms": content
+        }
+    };
 
     http:Request request = new;
     request.setHeader(AUTHORIZATION, self.apiKey);
@@ -40,10 +49,17 @@ public remote function Client.sendSMS(string destination, string content) return
 
 }
 
-public remote function Client.sendOTP(string destination) returns json|error {
+public remote function Client.sendOTP(string destination) returns json | error {
 
     string endpointResource = "/otpservice/send";
-    json sendOtpJsonPayload = {"source": SHOUTOUT_DEMO,"destination": destination, "transport": SMS_TRANSPORT ,"content": {"sms": "ShoutOUT code is {{code}}"}};
+    json sendOtpJsonPayload = {
+        "source": SHOUTOUT_DEMO,
+        "destination": destination,
+        "transport": SMS_TRANSPORT,
+        "content": {
+            "sms": "ShoutOUT code is {{code}}"
+        }
+    };
 
     http:Request request = new;
     request.setHeader(AUTHORIZATION, self.apiKey);
@@ -54,10 +70,13 @@ public remote function Client.sendOTP(string destination) returns json|error {
     return validatedResponse;
 }
 
-public remote function Client.verifyOTP(string code, string referenceId) returns json|error{
+public remote function Client.verifyOTP(string code, string referenceId) returns json | error {
 
     string resourcePath = OTP_VERIFY;
-    json verifyOtpJsonPayload = {"code": code,"referenceId": referenceId };
+    json verifyOtpJsonPayload = {
+        "code": code,
+        "referenceId": referenceId
+    };
 
     http:Request request = new;
     request.setHeader(AUTHORIZATION, self.apiKey);

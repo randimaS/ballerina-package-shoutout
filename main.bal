@@ -3,13 +3,13 @@ import ballerina/config;
 import shoutout;
 
 shoutout:ShoutOutConfiguration shoutOutConfig = {
-    apiKey: "XXXXXXXXXXX"
+    apiKey: config:getAsString("API_KEY")
 };
 
 shoutout:Client shoutOutClient = new (shoutOutConfig);
 
 public function main(string... args) {
-    string destinations = "+XXXXXX";
+    string destinations = "+94719899924";
     string SMScontent = "Test SMS";
     string OTPCode = "XXXXX";
     string OTPReferenceId = "XXXX-XXXX-XXXXXXX-XX-XXXXXXXXX";
@@ -17,9 +17,9 @@ public function main(string... args) {
     var smsResponse = shoutOutClient->sendSMS(destinations, SMScontent);
     io:println(smsResponse);
 
-    var otpResponse = shoutOutClient->sendOTP(destinations);
-    io:println(otpResponse);
+    //var otpResponse = shoutOutClient->sendOTP(destinations);
+    //io:println(otpResponse);
 
-    var verifyOtpResponse = shoutOutClient->verifyOTP(OTPCode, OTPReferenceId);
-    io:println(verifyOtpResponse);
+    //var verifyOtpResponse = shoutOutClient->verifyOTP(OTPCode, OTPReferenceId);
+    //io:println(verifyOtpResponse);
 }

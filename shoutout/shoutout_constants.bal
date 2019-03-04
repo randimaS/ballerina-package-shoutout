@@ -10,6 +10,6 @@ final string SMS_TRANSPORT = "sms";
 
 final string AUTHORIZATION = "Authorization";
 
-final string APIKEY = "Apikey";
+final string APIKEY = "Apikey ";
 
 final string SHOUTOUT_ERROR_CODE = "(module/shoutout)ShoutOutError";

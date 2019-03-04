@@ -15,21 +15,21 @@ public type Client client object {
     string apiKey;
 
     public function __init(ShoutOutConfiguration shoutOutConfig) {
-        self.shoutOutRestClient = new("https://api.getshoutout.com");
-        self.apiKey = "Apikey " + <string>shoutOutConfig.apiKey;
+        self.shoutOutRestClient = new(SHOUTOUT_LITE_API_BASE_URL);
+        self.apiKey = APIKEY + <string>shoutOutConfig.apiKey;
 
     }
 
-    public remote function sendSMS(string destination, string content) returns json | error;
-    public remote function sendOTP(string destination) returns json | error;
+    public remote function sendSMS(string sender,string destination, string content) returns json | error;
+    public remote function sendOTP(string sender, string destination) returns json | error;
     public remote function verifyOTP(string code, string referenceId) returns json | error;
 };
 
-public remote function Client.sendSMS(string destination, string content) returns json | error {
+public remote function Client.sendSMS(string sender, string destination, string content) returns json | error {
 
     string endpointResource = MSG_SEND;
     json sendSmsJsonPayload = {
-        "source": SHOUTOUT_DEMO,
+        "source": sender,
         "destinations": [destination],
         "transports": [SMS_TRANSPORT],
         "content": {
@@ -49,11 +49,11 @@ public remote function Client.sendSMS(string destination, string content) return
 
 }
 
-public remote function Client.sendOTP(string destination) returns json | error {
+public remote function Client.sendOTP(string sender, string destination) returns json | error {
 
-    string endpointResource = "/otpservice/send";
+    string endpointResource = OTP_SEND;
     json sendOtpJsonPayload = {
-        "source": SHOUTOUT_DEMO,
+        "source": sender,
         "destination": destination,
         "transport": SMS_TRANSPORT,
         "content": {

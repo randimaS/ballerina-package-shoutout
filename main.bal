@@ -2,22 +2,24 @@ import ballerina/io;
 import ballerina/config;
 import shoutout;
 
-endpoint shoutout:Client shoutoutEP {
-  apiKey: "Apikey "+config:getAsString("API_KEY")
+shoutout:ShoutOutConfiguration shoutOutConfig = {
+    apiKey: config:getAsString("API_KEY")
 };
 
-function main(string... args) {
-  string destinations = "+94 XXXX";
-  string SMScontent = "Test SMS";
-  string OTPCode = "XXXXX";
-  string OTPReferenceId ="XXXXXX";
+shoutout:Client shoutOutClient = new (shoutOutConfig);
 
-  var smsResponse = shoutoutEP->sendSMS(destinations, SMScontent);
-  io:println(smsResponse);
+public function main(string... args) {
+    string destinations = "+94719899924";
+    string SMScontent = "Test SMS";
+    string OTPCode = "XXXXX";
+    string OTPReferenceId = "XXXX-XXXX-XXXXXXX-XX-XXXXXXXXX";
 
-  var otpResponse = shoutoutEP->sendOTP(destinations);
-  io:println(otpResponse);
+    var smsResponse = shoutOutClient->sendSMS(destinations, SMScontent);
+    io:println(smsResponse);
 
-  var otpResponse = shoutoutEP->verifyOTP(OTPCode,OTPReferenceId);
-  io:println(otpResponse);
+    //var otpResponse = shoutOutClient->sendOTP(destinations);
+    //io:println(otpResponse);
+
+    //var verifyOtpResponse = shoutOutClient->verifyOTP(OTPCode, OTPReferenceId);
+    //io:println(verifyOtpResponse);
 }

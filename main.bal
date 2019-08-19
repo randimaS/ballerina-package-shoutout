@@ -9,7 +9,7 @@ shoutout:ShoutOutConfiguration shoutOutConfig = {
 shoutout:Client shoutOutClient = new (shoutOutConfig);
 
 public function main(string... args) {
-    string destinations = "+94719899924";
+    string destinations = "+947XXXXXXXX";
     string SMScontent = "Test SMS";
     string OTPCode = "XXXXX";
     string OTPReferenceId = "XXXX-XXXX-XXXXXXX-XX-XXXXXXXXX";
